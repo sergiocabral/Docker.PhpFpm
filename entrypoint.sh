@@ -172,7 +172,8 @@ then
         echo "[www]" > $DIR_CONF_FPM/www.conf;
     fi
     sed -i -e "/^listen =/ s/^/;/" $DIR_CONF/php-fpm.conf;
-    echo "listen = 0.0.0.0:9000" >> $DIR_CONF_FPM/www.conf;
+    echo "listen = [::]:9000" >> $DIR_CONF_FPM/www.conf;
+    echo "access.log = /var/log/$pool.access.log" >> $DIR_CONF_FPM/www.conf;
 
     if [ -d "$DIR_CONF_TEMPLATES" ] && [ ! -z "$(ls -A $DIR_CONF_TEMPLATES)" ];
     then
