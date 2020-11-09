@@ -158,10 +158,15 @@ then
     mkdir -p $DIR_CONF_D_TEMPLATES;
     mkdir -p $DIR_CONF_FPM_TEMPLATES;
 
-    if [ ! -f "$DIR_CONF_FPM/www.conf" ];
+    printf "Adjusting configuration,\n";
+
+    if [ -f "$DIR_CONF_FPM/www.conf" ];
     then
-        echo "" > $DIR_CONF_FPM/www.conf;
+        sed -i -e "/^listen =/ s/^/;/" $DIR_CONF_FPM/www.conf;
+        echo "" >> $DIR_CONF_FPM/www.conf;
     fi
+    sed -i -e "/^listen =/ s/^/;/" $DIR_CONF/php-fpm.conf;
+    echo "listen = [::]:9000" >> $DIR_CONF_FPM/www.conf;
 
     if [ -d "$DIR_CONF_TEMPLATES" ] && [ ! -z "$(ls -A $DIR_CONF_TEMPLATES)" ];
     then
