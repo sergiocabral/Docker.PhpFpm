@@ -120,17 +120,18 @@ fi
 
 if [ "$PHP_VERSION" == "5" ];
 then
-    PHPFPM_EXECUTABLE=$(which php-fpm || echo "");
+    PHPFPM_EXECUTABLE_NAME="php-fpm";
     DIR_CONF="/etc/php5";
     DIR_NAME_CONF_FPM="fpm.d";
 fi
 if [ "$PHP_VERSION" == "7" ];
 then
-    PHPFPM_EXECUTABLE=$(which php-fpm7 || echo "");
+    PHPFPM_EXECUTABLE_NAME="php-fpm7";
     DIR_CONF="/etc/php7";
     DIR_NAME_CONF_FPM="php-fpm.d";
 fi
 SUFFIX_TEMPLATE=".template";
+PHPFPM_EXECUTABLE=$(which $PHPFPM_EXECUTABLE_NAME || echo "");
 DIR_CONF_BACKUP="$DIR_CONF.original";
 DIR_CONF_DOCKER="$DIR_CONF.conf";
 DIR_CONF_D="$DIR_CONF/conf.d";
@@ -143,9 +144,12 @@ DIR_SCRIPTS="${DIR_SCRIPTS:-/root}";
 if [ $IS_FIRST_CONFIGURATION = true ];
 then
     printf "Running PHP for first time.\n";
+
     $PHPFPM_EXECUTABLE;
     sleep 1;
-    pkill $PHPFPM_EXECUTABLE || echo "";
+
+    pkill $PHPFPM_EXECUTABLE_NAME || echo "";
+    sleep 1;
 
     printf "Making configuration backup.\n";
 
@@ -164,9 +168,11 @@ then
     then
         sed -i -e "/^listen =/ s/^/;/" $DIR_CONF_FPM/www.conf;
         echo "" >> $DIR_CONF_FPM/www.conf;
+    else    
+        echo "[www]" > $DIR_CONF_FPM/www.conf;
     fi
     sed -i -e "/^listen =/ s/^/;/" $DIR_CONF/php-fpm.conf;
-    echo "listen = [::]:9000" >> $DIR_CONF_FPM/www.conf;
+    echo "listen = 0.0.0.0:9000" >> $DIR_CONF_FPM/www.conf;
 
     if [ -d "$DIR_CONF_TEMPLATES" ] && [ ! -z "$(ls -A $DIR_CONF_TEMPLATES)" ];
     then
