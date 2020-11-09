@@ -1,7 +1,11 @@
 FROM alpine:latest
 
 RUN apk add --no-cache \
-	bash
+	bash \
+	gettext
+
+COPY ./scripts/bash/split-to-lines.sh /root/
+COPY ./scripts/bash/envsubst-files.sh /root/
 
 COPY ./entrypoint.sh /root/
 

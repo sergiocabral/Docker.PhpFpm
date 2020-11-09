@@ -138,6 +138,7 @@ DIR_CONF_FPM="$DIR_CONF/$DIR_NAME_CONF_FPM";
 DIR_CONF_TEMPLATES="$DIR_CONF.templates";
 DIR_CONF_D_TEMPLATES="$DIR_CONF.templates.d";
 DIR_CONF_FPM_TEMPLATES="$DIR_CONF.templates.fpm";
+DIR_SCRIPTS="${DIR_SCRIPTS:-/root}";
 
 if [ $IS_FIRST_CONFIGURATION = true ];
 then
@@ -216,5 +217,13 @@ else
     printf "This is NOT the first run.\n";
 fi
 
+printf "Tip: Use files $DIR_CONF_TEMPLATES/*$SUFFIX_TEMPLATE to make the files in the $DIR_CONF directory with replacement of environment variables with their values.\n";
+$DIR_SCRIPTS/envsubst-files.sh "$SUFFIX_TEMPLATE" "$DIR_CONF_TEMPLATES" "$DIR_CONF";
+printf "Tip: Use files $DIR_CONF_D_TEMPLATES/*$SUFFIX_TEMPLATE to make the files in the $DIR_CONF_D directory with replacement of environment variables with their values.\n";
+$DIR_SCRIPTS/envsubst-files.sh "$SUFFIX_TEMPLATE" "$DIR_CONF_D_TEMPLATES" "$DIR_CONF_D";
+printf "Tip: Use files $DIR_CONF_FPM_TEMPLATES/*$SUFFIX_TEMPLATE to make the files in the $DIR_CONF_FPM directory with replacement of environment variables with their values.\n";
+$DIR_SCRIPTS/envsubst-files.sh "$SUFFIX_TEMPLATE" "$DIR_CONF_FPM_TEMPLATES" "$DIR_CONF_FPM";
+
+$PHPFPM_EXECUTABLE;
 
 sleep infinity;
