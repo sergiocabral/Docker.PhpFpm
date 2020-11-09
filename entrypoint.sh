@@ -24,8 +24,8 @@ fi
 
 printf "Using PHP version $PHP_VERSION\n";
 
-PHP_INSTALED=$(ls -Fla /etc | grep php || echo "");
-IS_FIRST_CONFIGURATION=$((test -z $PHP_INSTALED && echo true) || echo false);
+IS_FIRST_CONFIGURATION=$(which php-fpm || which php-fpm7 || echo "");
+IS_FIRST_CONFIGURATION=$((test -z $IS_FIRST_CONFIGURATION && echo true) || echo false);
 
 if [ $IS_FIRST_CONFIGURATION = true ];
 then
@@ -146,7 +146,7 @@ then
     sleep 1;
     pkill $PHPFPM_EXECUTABLE || echo "";
 
-    printf "Making configurations backups and templates.\n";
+    printf "Making configuration backup.\n";
 
     mkdir -p $DIR_CONF_DOCKER;
     cp -R $DIR_CONF/* $DIR_CONF_DOCKER/;
@@ -162,21 +162,46 @@ then
         echo "" > $DIR_CONF_FPM/www.conf;
     fi
 
-    cp $DIR_CONF/*.ini $DIR_CONF_TEMPLATES/;
-    cp $DIR_CONF/*.conf $DIR_CONF_TEMPLATES/;
-    cp $DIR_CONF_D/* $DIR_CONF_D_TEMPLATES/;
-    cp $DIR_CONF_FPM/* $DIR_CONF_FPM_TEMPLATES/;
+    if [ -d "$DIR_CONF_TEMPLATES" ] && [ ! -z "$(ls -A $DIR_CONF_TEMPLATES)" ];
+    then
+        printf "Warning: The $DIR_CONF_TEMPLATES directory already existed and will not have its content overwritten.\n";
+    else
+        printf "Creating files templates in $DIR_CONF_TEMPLATES\n";
 
-    ls -1 $DIR_CONF_TEMPLATES | \
-        grep -v $SUFFIX_TEMPLATE | \
-        xargs -I {} mv $DIR_CONF_TEMPLATES/{} $DIR_CONF_TEMPLATES/{}$SUFFIX_TEMPLATE;
-    ls -1 $DIR_CONF_D_TEMPLATES | \
-        grep -v $SUFFIX_TEMPLATE | \
-        xargs -I {} mv $DIR_CONF_D_TEMPLATES/{} $DIR_CONF_D_TEMPLATES/{}$SUFFIX_TEMPLATE;
-    ls -1 $DIR_CONF_FPM_TEMPLATES | \
-        grep -v $SUFFIX_TEMPLATE | \
-        xargs -I {} mv $DIR_CONF_FPM_TEMPLATES/{} $DIR_CONF_FPM_TEMPLATES/{}$SUFFIX_TEMPLATE;
+        cp $DIR_CONF/*.ini $DIR_CONF_TEMPLATES/;
+        cp $DIR_CONF/*.conf $DIR_CONF_TEMPLATES/;
 
+        ls -1 $DIR_CONF_TEMPLATES | \
+            grep -v $SUFFIX_TEMPLATE | \
+            xargs -I {} mv $DIR_CONF_TEMPLATES/{} $DIR_CONF_TEMPLATES/{}$SUFFIX_TEMPLATE;
+    fi
+
+    if [ -d "$DIR_CONF_D_TEMPLATES" ] && [ ! -z "$(ls -A $DIR_CONF_D_TEMPLATES)" ];
+    then
+        printf "Warning: The $DIR_CONF_D_TEMPLATES directory already existed and will not have its content overwritten.\n";
+    else
+        printf "Creating files templates in $DIR_CONF_D_TEMPLATES\n";
+
+        cp $DIR_CONF_D/* $DIR_CONF_D_TEMPLATES/;
+
+        ls -1 $DIR_CONF_D_TEMPLATES | \
+            grep -v $SUFFIX_TEMPLATE | \
+            xargs -I {} mv $DIR_CONF_D_TEMPLATES/{} $DIR_CONF_D_TEMPLATES/{}$SUFFIX_TEMPLATE;
+    fi
+
+    if [ -d "$DIR_CONF_FPM_TEMPLATES" ] && [ ! -z "$(ls -A $DIR_CONF_FPM_TEMPLATES)" ];
+    then
+        printf "Warning: The $DIR_CONF_FPM_TEMPLATES directory already existed and will not have its content overwritten.\n";
+    else
+        printf "Creating files templates in $DIR_CONF_FPM_TEMPLATES\n";
+
+        cp $DIR_CONF_FPM/* $DIR_CONF_FPM_TEMPLATES/;
+
+        ls -1 $DIR_CONF_FPM_TEMPLATES | \
+            grep -v $SUFFIX_TEMPLATE | \
+            xargs -I {} mv $DIR_CONF_FPM_TEMPLATES/{} $DIR_CONF_FPM_TEMPLATES/{}$SUFFIX_TEMPLATE;
+    fi
+    
     USER=root;
     chown -R $USER:$USER $DIR_CONF_BACKUP;
     chown -R $USER:$USER $DIR_CONF_DOCKER;
@@ -190,8 +215,6 @@ then
 else
     printf "This is NOT the first run.\n";
 fi
-
-
 
 
 sleep infinity;
