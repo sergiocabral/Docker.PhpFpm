@@ -35,15 +35,14 @@ then
 
     if [ "$PHP_VERSION" == "5" ];
     then
-        APK_REPOSITORY_VERSION="3.4";
+        echo "http://dl-cdn.alpinelinux.org/alpine/v3.4/main" > /etc/apk/repositories;
+        echo "http://dl-cdn.alpinelinux.org/alpine/v3.4/community" >> /etc/apk/repositories;
     fi
     if [ "$PHP_VERSION" == "7" ];
     then
-        APK_REPOSITORY_VERSION="3.12";
+        echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories;
+        echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories;
     fi
-
-    echo "http://dl-cdn.alpinelinux.org/alpine/v$APK_REPOSITORY_VERSION/main" > /etc/apk/repositories;
-    echo "http://dl-cdn.alpinelinux.org/alpine/v$APK_REPOSITORY_VERSION/community" >> /etc/apk/repositories;
 
     cat /etc/apk/repositories;
     apk update;
