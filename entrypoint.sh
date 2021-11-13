@@ -16,15 +16,15 @@ printf "\n";
 
 printf "Entrypoint for docker image: PHP\n";
 
-if [ "$PHP_VERSION" != "5" ] && [ "$PHP_VERSION" != "7" ];
+if [ "$PHP_VERSION" != "5" ] && [ "$PHP_VERSION" != "7" ] && [ "$PHP_VERSION" != "8" ];
 then
-    printf "Invalid PHP version. Use 5 or 7.\n" >> /dev/stderr;
+    printf "Invalid PHP version. Use 5, 7 or 8.\n" >> /dev/stderr;
     exit 1;
 fi
 
 printf "Using PHP version $PHP_VERSION\n";
 
-IS_FIRST_CONFIGURATION=$(which php-fpm || which php-fpm7 || echo "");
+IS_FIRST_CONFIGURATION=$(which php-fpm || which php-fpm7 || which php-fpm8 || printf "");
 IS_FIRST_CONFIGURATION=$((test -z $IS_FIRST_CONFIGURATION && echo true) || echo false);
 
 if [ $IS_FIRST_CONFIGURATION = true ];
@@ -42,6 +42,12 @@ then
     then
         echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories;
         echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories;
+    fi
+    if [ "$PHP_VERSION" == "8" ];
+    then
+        echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories;
+        echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories;
+        echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories;
     fi
 
     cat /etc/apk/repositories;
@@ -117,6 +123,39 @@ then
             php7-mbstring \
             php7-session;
     fi
+    if [ "$PHP_VERSION" == "8" ];
+    then
+        apk add \
+            php8-fpm \
+            php8-pecl-mcrypt \
+            php8-soap \
+            php8-openssl \
+            php8-gmp \
+            php8-pdo_odbc \
+            php8-json \
+            php8-dom \
+            php8-pdo \
+            php8-zip \
+            php8-mysqli \
+            php8-sqlite3 \
+            php8-apcu \
+            php8-pdo_pgsql \
+            php8-bcmath \
+            php8-gd \
+            php8-odbc \
+            php8-pdo_mysql \
+            php8-pdo_sqlite \
+            php8-gettext \
+            php8-xmlreader \
+            php8-pecl-xmlrpc \
+            php8-bz2 \
+            php8-iconv \
+            php8-pdo_dblib \
+            php8-curl \
+            php8-ctype \
+            php8-mbstring \
+            php8-session;
+    fi
 fi
 
 if [ "$PHP_VERSION" == "5" ];
@@ -129,6 +168,12 @@ if [ "$PHP_VERSION" == "7" ];
 then
     PHPFPM_EXECUTABLE_NAME="php-fpm7";
     DIR_CONF="/etc/php7";
+    DIR_NAME_CONF_FPM="php-fpm.d";
+fi
+if [ "$PHP_VERSION" == "8" ];
+then
+    PHPFPM_EXECUTABLE_NAME="php-fpm8";
+    DIR_CONF="/etc/php8";
     DIR_NAME_CONF_FPM="php-fpm.d";
 fi
 SUFFIX_TEMPLATE=".template";
