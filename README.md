@@ -12,23 +12,23 @@ It is possible to use template `php.ini.template` and `*.conf.template` files to
 
 **Configuring your services or websites:**
 
-`PHP_VERSION` = `5` or `7`
+`PHP_VERSION` = `5`, `7` or `8`
 
 - Mandatory value.
 - Inform the version for PHP processor.
 
 ## Suggested Directory Volumes
 
-`/etc/php7.templates`
-`/etc/php7.templates.d`
-`/etc/php7.templates.fpm`
+`/etc/php8.templates`
+`/etc/php8.templates.d`
+`/etc/php8.templates.fpm`
 
 - Use files `*.template` in these directories to make the files in the respective directory without `.template` part. The final files will have the replacement of environment variables with their values.
 
-`/etc/php7.conf`
+`/etc/php8.conf`
 
 - Configuration directory used by the PHP processor. All configuration files are here.
-- The default `/etc/php7/` directory is a symbolic link that points to this directory.
+- The default `/etc/php8/` directory is a symbolic link that points to this directory.
 
 `/home`
 
@@ -39,7 +39,7 @@ It is possible to use template `php.ini.template` and `*.conf.template` files to
 
 - Log files for PHP processor.
 
-NOTE: If variable `PHP_VERSION` is `5` consider above names `php7` as `php5`.
+NOTE: If variable `PHP_VERSION` is `5` or `7` consider above names `php8` as `php5` or `php7`.
 
 ## Exposed Port
 
@@ -55,14 +55,14 @@ services:
     ports:
       - 9000:9000
     volumes:      
-      - /docker-volumes/php7/templates:/etc/php7.templates
-      - /docker-volumes/php7/templates.d:/etc/php7.templates.d
-      - /docker-volumes/php7/templates.fpm:/etc/php7.templates.fpm
-      - /docker-volumes/php7/conf:/etc/php7.conf
-      - /docker-volumes/php7/log:/var/log
+      - /docker-volumes/php8/templates:/etc/php8.templates
+      - /docker-volumes/php8/templates.d:/etc/php8.templates.d
+      - /docker-volumes/php8/templates.fpm:/etc/php8.templates.fpm
+      - /docker-volumes/php8/conf:/etc/php8.conf
+      - /docker-volumes/php8/log:/var/log
       - /docker-volumes/nginx/sites:/home/
     environment:
-      - PHP_VERSION=7
+      - PHP_VERSION=8
 ```
 
-NOTE AGAIN: If variable `PHP_VERSION` is `5` consider above names `php7` as `php5`.
+NOTE AGAIN: If variable `PHP_VERSION` is `5` or `7` consider above names `php8` as `php5` or `php7`.
