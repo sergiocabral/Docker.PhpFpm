@@ -58,6 +58,7 @@ then
     if [ "$PHP_VERSION" == "5" ];
     then
         apk add \
+            openssl \
             php5-fpm \
             php5-mcrypt \
             php5-soap \
@@ -88,11 +89,14 @@ then
             php5-iconv \
             php5-pdo_dblib \
             php5-curl \
+            php5-common \
+            php5-xml \
             php5-ctype;
     fi
     if [ "$PHP_VERSION" == "7" ];
     then
         apk add \
+            openssl \
             php7-fpm \
             php7-mcrypt \
             php7-soap \
@@ -121,11 +125,15 @@ then
             php7-curl \
             php7-ctype \
             php7-mbstring \
+            php7-tokenizer \
+            php7-common \
+            php7-xml \
             php7-session;
     fi
     if [ "$PHP_VERSION" == "8" ];
     then
         apk add \
+            openssl \
             php8-fpm \
             php8-pecl-mcrypt \
             php8-soap \
@@ -154,6 +162,9 @@ then
             php8-curl \
             php8-ctype \
             php8-mbstring \
+            php8-tokenizer \
+            php8-common \
+            php8-xml \
             php8-session;
     fi
 fi
