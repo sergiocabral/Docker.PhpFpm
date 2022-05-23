@@ -40,11 +40,12 @@ then
     fi
     if [ "$PHP_VERSION" == "7" ];
     then
-        echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories;
-        echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories;
+        echo "http://dl-cdn.alpinelinux.org/alpine/v3.15/main" > /etc/apk/repositories;
+        echo "http://dl-cdn.alpinelinux.org/alpine/v3.15/community" >> /etc/apk/repositories;
     fi
     if [ "$PHP_VERSION" == "8" ];
     then
+        # TODO: Trocar, quando disponível, para versão específica do repositório do alpine.
         echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories;
         echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories;
         echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories;
