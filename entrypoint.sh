@@ -68,10 +68,10 @@ then
 
     if [ "$PHP_VERSION" == "5" ];
     then
-        apk add \
-            openssl \
 #           php5 \
 #           php5-apache2 \
+        apk add \
+            openssl \
             php5-apcu \
             php5-bcmath \
             php5-bz2 \
@@ -152,10 +152,10 @@ then
     fi
     if [ "$PHP_VERSION" == "7" ];
     then
-        apk add \
-            openssl \
 #           php7 \
 #           php7-apache2 \
+        apk add \
+            openssl \
             php7-bcmath \
             php7-brotli \
             php7-bz2 \
@@ -260,10 +260,11 @@ then
     fi
     if [ "$PHP_VERSION" == "8" ];
     then
-        apk add \
-            openssl \
 #           php8 \
 #           php8-apache2 \
+#           php8-pecl-couchbase \
+        apk add \
+            openssl \
 	    php8-bcmath \
             php8-brotli \
             php8-bz2 \
@@ -309,7 +310,6 @@ then
             php8-pecl-amqp \
             php8-pecl-apcu \
             php8-pecl-ast \
-#           php8-pecl-couchbase \
             php8-pecl-event \
             php8-pecl-igbinary \
             php8-pecl-lzf \
