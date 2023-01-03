@@ -60,39 +60,83 @@ then
     then
         apk add \
             openssl \
-            php5-fpm \
-            php5-mcrypt \
-            php5-soap \
-            php5-openssl \
-            php5-gmp \
-            php5-pdo_odbc \
-            php5-json \
-            php5-dom \
-            php5-pdo \
-            php5-zip \
-            php5-mysql \
-            php5-mysqli \
-            php5-sqlite3 \
             php5-apcu \
-            php5-pdo_pgsql \
             php5-bcmath \
-            php5-gd \
-            php5-xcache \
-            php5-odbc \
-            php5-pdo_mysql \
-            php5-pdo_sqlite \
-            php5-gettext \
-            php5-xmlreader \
-            php5-xmlrpc \
             php5-bz2 \
+            php5-calendar \
+            php5-cgi \
+            php5-cli \
+            php5-common \
+            php5-ctype \
+            php5-curl \
+            php5-dba \
+            php5-dbg \
+            php5-dev \
+            php5-doc \
+            php5-dom \
+            php5-embed \
+            php5-enchant \
+            php5-exif \
+            php5-fpm \
+            php5-ftp \
+            php5-gd \
+            php5-gettext \
+            php5-gmp \
+            php5-iconv \
+            php5-imap \
+            php5-intl \
+            php5-json \
+            php5-ldap \
+            php5-mailparse \
+            php5-mcrypt \
             php5-memcache \
             php5-mssql \
-            php5-iconv \
+            php5-mysql \
+            php5-mysqli \
+            php5-odbc \
+            php5-opcache \
+            php5-openssl \
+            php5-pcntl \
+            php5-pdo \
             php5-pdo_dblib \
-            php5-curl \
-            php5-common \
+            php5-pdo_mysql \
+            php5-pdo_odbc \
+            php5-pdo_pgsql \
+            php5-pdo_sqlite \
+            php5-pear \
+            php5-pear-auth_sasl \
+            php5-pear-mail_mime \
+            php5-pear-mdb2 \
+            php5-pear-mdb2-driver-mysql \
+            php5-pear-mdb2-driver-mysqli \
+            php5-pear-mdb2-driver-pgsql \
+            php5-pear-mdb2-driver-sqlite \
+            php5-pear-net_idna2 \
+            php5-pear-net_smtp \
+            php5-pear-net_socket \
+            php5-pgsql \
+            php5-phalcon \
+            php5-phar \
+            php5-phpdbg \
+            php5-phpmailer \
+            php5-posix \
+            php5-pspell \
+            php5-shmop \
+            php5-snmp \
+            php5-soap \
+            php5-sockets \
+            php5-sqlite3 \
+            php5-sysvmsg \
+            php5-sysvsem \
+            php5-sysvshm \
+            php5-wddx \
+            php5-xcache \
             php5-xml \
-            php5-ctype;
+            php5-xmlreader \
+            php5-xmlrpc \
+            php5-xsl \
+            php5-zip \
+            php5-zlib;
     fi
     if [ "$PHP_VERSION" == "7" ];
     then
