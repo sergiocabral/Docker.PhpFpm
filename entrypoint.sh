@@ -16,9 +16,9 @@ printf "\n";
 
 printf "Entrypoint for docker image: PHP\n";
 
-if [ "$PHP_VERSION" != "5" ] && [ "$PHP_VERSION" != "7" ] && [ "$PHP_VERSION" != "8" ];
+if [ "$PHP_VERSION" != "5" ] && [ "$PHP_VERSION" != "7" ] && [ "$PHP_VERSION" != "8" ] && [ "$PHP_VERSION" != "8.1" ] && [ "$PHP_VERSION" != "8.2" ];
 then
-    printf "Invalid PHP version. Use 5, 7 or 8.\n" >> /dev/stderr;
+    printf "Invalid PHP version. Use 5, 7, 8, 8.1 or 8.2\n" >> /dev/stderr;
     exit 1;
 fi
 
@@ -44,6 +44,16 @@ then
         echo "http://dl-cdn.alpinelinux.org/alpine/v3.15/community" >> /etc/apk/repositories;
     fi
     if [ "$PHP_VERSION" == "8" ];
+    then
+        echo "http://dl-cdn.alpinelinux.org/alpine/v3.16/main" > /etc/apk/repositories;
+        echo "http://dl-cdn.alpinelinux.org/alpine/v3.16/community" >> /etc/apk/repositories;
+    fi
+    if [ "$PHP_VERSION" == "8.1" ];
+    then
+        echo "http://dl-cdn.alpinelinux.org/alpine/v3.17/main" > /etc/apk/repositories;
+        echo "http://dl-cdn.alpinelinux.org/alpine/v3.17/community" >> /etc/apk/repositories;
+    fi
+    if [ "$PHP_VERSION" == "8.2" ];
     then
         # TODO: Trocar, quando disponível, para versão específica do repositório do alpine.
         echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories;
@@ -142,38 +152,107 @@ then
     then
         apk add \
             openssl \
-            php7-fpm \
-            php7-mcrypt \
-            php7-soap \
-            php7-openssl \
-            php7-gmp \
-            php7-pdo_odbc \
-            php7-json \
-            php7-dom \
-            php7-pdo \
-            php7-zip \
-            php7-mysqli \
-            php7-sqlite3 \
-            php7-apcu \
-            php7-pdo_pgsql \
             php7-bcmath \
+            php7-brotli \
+            php7-bz2 \
+            php7-calendar \
+            php7-cgi \
+            php7-common \
+            php7-ctype \
+            php7-curl \
+            php7-dba \
+            php7-dbg \
+            php7-dev \
+            php7-doc \
+            php7-dom \
+            php7-embed \
+            php7-enchant \
+            php7-exif \
+            php7-ffi \
+            php7-fileinfo \
+            php7-fpm \
+            php7-ftp \
             php7-gd \
-            php7-odbc \
-            php7-pdo_mysql \
-            php7-pdo_sqlite \
             php7-gettext \
+            php7-gmp \
+            php7-iconv \
+            php7-imap \
+            php7-intl \
+            php7-json \
+            php7-ldap \
+            php7-litespeed \
+            php7-mbstring \
+            php7-mysqli \
+            php7-mysqlnd \
+            php7-odbc \
+            php7-opcache \
+            php7-openssl \
+            php7-pcntl \
+            php7-pdo \
+            php7-pdo_dblib \
+            php7-pdo_mysql \
+            php7-pdo_odbc \
+            php7-pdo_pgsql \
+            php7-pdo_sqlite \
+            php7-pear \
+            php7-pecl-amqp \
+            php7-pecl-apcu \
+            php7-pecl-ast \
+            php7-pecl-couchbase \
+            php7-pecl-event \
+            php7-pecl-gmagick \
+            php7-pecl-igbinary \
+            php7-pecl-lzf \
+            php7-pecl-mailparse \
+            php7-pecl-maxminddb \
+            php7-pecl-mcrypt \
+            php7-pecl-memcache \
+            php7-pecl-memcached \
+            php7-pecl-mongodb \
+            php7-pecl-msgpack \
+            php7-pecl-oauth \
+            php7-pecl-protobuf \
+            php7-pecl-psr \
+            php7-pecl-rdkafka \
+            php7-pecl-redis \
+            php7-pecl-ssh2 \
+            php7-pecl-timezonedb \
+            php7-pecl-uploadprogress \
+            php7-pecl-uploadprogress-doc \
+            php7-pecl-uuid \
+            php7-pecl-vips \
+            php7-pecl-xdebug \
+            php7-pecl-xhprof \
+            php7-pecl-xhprof-assets \
+            php7-pecl-yaml \
+            php7-pecl-zmq \
+            php7-pecl-zstd \
+            php7-pgsql \
+            php7-phalcon \
+            php7-phar \
+            php7-phpdbg \
+            php7-posix \
+            php7-pspell \
+            php7-session \
+            php7-shmop \
+            php7-simplexml \
+            php7-snmp \
+            php7-soap \
+            php7-sockets \
+            php7-sodium \
+            php7-sqlite3 \
+            php7-sysvmsg \
+            php7-sysvsem \
+            php7-sysvshm \
+            php7-tideways_xhprof \
+            php7-tidy \
+            php7-tokenizer \
+            php7-xml \
             php7-xmlreader \
             php7-xmlrpc \
-            php7-bz2 \
-            php7-iconv \
-            php7-pdo_dblib \
-            php7-curl \
-            php7-ctype \
-            php7-mbstring \
-            php7-tokenizer \
-            php7-common \
-            php7-xml \
-            php7-session;
+            php7-xmlwriter \
+            php7-xsl \
+            php7-zip;
     fi
     if [ "$PHP_VERSION" == "8" ];
     then
@@ -212,6 +291,80 @@ then
             php8-xml \
             php8-session;
     fi
+    if [ "$PHP_VERSION" == "8.1" ];
+    then
+        apk add \
+            openssl \
+            php81-fpm \
+            php81-pecl-mcrypt \
+            php81-soap \
+            php81-openssl \
+            php81-gmp \
+            php81-pdo_odbc \
+            php81-json \
+            php81-dom \
+            php81-pdo \
+            php81-zip \
+            php81-mysqli \
+            php81-sqlite3 \
+            php81-apcu \
+            php81-pdo_pgsql \
+            php81-bcmath \
+            php81-gd \
+            php81-odbc \
+            php81-pdo_mysql \
+            php81-pdo_sqlite \
+            php81-gettext \
+            php81-xmlreader \
+            php81-pecl-xmlrpc \
+            php81-bz2 \
+            php81-iconv \
+            php81-pdo_dblib \
+            php81-curl \
+            php81-ctype \
+            php81-mbstring \
+            php81-tokenizer \
+            php81-common \
+            php81-xml \
+            php81-session;
+    fi
+    if [ "$PHP_VERSION" == "8.2" ];
+    then
+        apk add \
+            openssl \
+            php82-fpm \
+            php82-pecl-mcrypt \
+            php82-soap \
+            php82-openssl \
+            php82-gmp \
+            php82-pdo_odbc \
+            php82-json \
+            php82-dom \
+            php82-pdo \
+            php82-zip \
+            php82-mysqli \
+            php82-sqlite3 \
+            php82-apcu \
+            php82-pdo_pgsql \
+            php82-bcmath \
+            php82-gd \
+            php82-odbc \
+            php82-pdo_mysql \
+            php82-pdo_sqlite \
+            php82-gettext \
+            php82-xmlreader \
+            php82-pecl-xmlrpc \
+            php82-bz2 \
+            php82-iconv \
+            php82-pdo_dblib \
+            php82-curl \
+            php82-ctype \
+            php82-mbstring \
+            php82-tokenizer \
+            php82-common \
+            php82-xml \
+            php82-session;
+    fi
 fi
 
 if [ "$PHP_VERSION" == "5" ];
@@ -230,6 +383,18 @@ if [ "$PHP_VERSION" == "8" ];
 then
     PHPFPM_EXECUTABLE_NAME="php-fpm8";
     DIR_CONF="/etc/php8";
+    DIR_NAME_CONF_FPM="php-fpm.d";
+fi
+if [ "$PHP_VERSION" == "8.1" ];
+then
+    PHPFPM_EXECUTABLE_NAME="php-fpm81";
+    DIR_CONF="/etc/php81";
+    DIR_NAME_CONF_FPM="php-fpm.d";
+fi
+if [ "$PHP_VERSION" == "8.2" ];
+then
+    PHPFPM_EXECUTABLE_NAME="php-fpm82";
+    DIR_CONF="/etc/php82";
     DIR_NAME_CONF_FPM="php-fpm.d";
 fi
 SUFFIX_TEMPLATE=".template";
